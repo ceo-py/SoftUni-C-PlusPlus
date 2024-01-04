@@ -1,6 +1,7 @@
 #include <iostream>
 
-int main() {
+int main()
+{
     std::cout << "Hello SoftUni" << std::endl;
     return 0;
 }
