@@ -1,41 +1,51 @@
 #include <iostream>
 #include <string>
+#include <iomanip>
 
 int main()
 {
-    int allowBadGrades;
-    std::cin >> allowBadGrades;
+    int allow_bad_grades;
+    std::cin >> allow_bad_grades;
+    std::cin.ignore();
 
-    int totalScore = 0;
+    int total_score = 0;
     std::string task;
-    int totalBadGrades = 0;
-    int problemsCounter = 0;
-    std::string lastProblem;
+    int total_bad_grades = 0;
+    int problems_counter = 0;
+    std::string last_problem;
 
-    while (std::cin >> task && task != "Enough")
+    while (true)
     {
+        std::getline(std::cin, task);
+
+        if (task == "Enough")
+        {
+            double average_score = static_cast<double>(total_score) / problems_counter;
+            std::cout << std::fixed << std::setprecision(2);
+            std::cout << "Average score: " << average_score << "\nNumber of problems: "
+                      << problems_counter << "\nLast problem: " << last_problem << std::endl;
+            break;
+        }
+
         int score;
         std::cin >> score;
-        totalScore += score;
-        problemsCounter++;
+        std::cin.ignore();
+        total_score += score;
+        problems_counter++;
 
         if (score <= 4)
         {
-            totalBadGrades++;
+            total_bad_grades++;
 
-            if (allowBadGrades == totalBadGrades)
+            if (allow_bad_grades == total_bad_grades)
             {
-                std::cout << "You need a break, " << totalBadGrades << " poor grades." << std::endl;
-                return 0;
+                std::cout << "You need a break, " << total_bad_grades << " poor grades." << std::endl;
+                break;
             }
         }
 
-        lastProblem = task;
+        last_problem = task;
     }
-
-    std::cout << "Average score: " << static_cast<double>(totalScore) / problemsCounter << std::endl;
-    std::cout << "Number of problems: " << problemsCounter << std::endl;
-    std::cout << "Last problem: " << lastProblem << std::endl;
 
     return 0;
 }
