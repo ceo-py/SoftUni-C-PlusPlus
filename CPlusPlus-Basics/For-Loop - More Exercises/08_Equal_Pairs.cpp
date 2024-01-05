@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <string>
 
 int main()
 {
@@ -11,9 +12,10 @@ int main()
 
     for (int i = 0; i < count; ++i)
     {
-        int current_sum;
-        std::cin >> current_sum;
-        current_sum += int(input());
+        int num1, num2;
+        std::cin >> num1 >> num2;
+
+        int current_sum = num1 + num2;
 
         if (i == 0)
         {
@@ -22,6 +24,7 @@ int main()
         }
 
         int sum_abs = std::abs(previous_sum - current_sum);
+
         if (sum_abs > max_difference)
         {
             max_difference = sum_abs;
