@@ -1,9 +1,11 @@
 #include <iostream>
-#include <cmath>
+#include <string>
 
-std::string repeatString(const char *symbol, int repeatCount)
+using namespace std;
+
+string repeatString(const char *symbol, int repeatCount)
 {
-    std::string resultString;
+    string resultString;
     for (int i = 0; i < repeatCount; ++i)
     {
         resultString += symbol;
@@ -14,89 +16,74 @@ std::string repeatString(const char *symbol, int repeatCount)
 int main()
 {
     int n;
-    std::cin >> n;
+    cin >> n;
 
-    int lines = std::ceil((n - 1) / 2);
+    int lines = (n - 1) / 2;
     int mid = 0;
-    int z = 0;
+    bool isEven = n % 2 == 0;
 
-    if (n % 2 == 0)
+    if (isEven)
     {
-        lines = lines - 1;
-        z = 1;
+        lines--;
     }
 
-    // Upper part of the pyramid
     for (int i = 1; i <= lines + 2; ++i)
     {
         if (i == 1)
         {
-            int stars;
-            if (n % 2 == 0)
-            {
-                lines = static_cast<int>(std::abs(2 - n) / 2);
-                stars = 2;
-                std::cout << repeatString("-", lines) << repeatString("*", stars) << repeatString("-", lines) << std::endl;
-            }
-            else
-            {
-                lines = static_cast<int>(std::abs(n - 1) / 2);
-                stars = 1;
-                std::cout << repeatString("-", lines) << repeatString("*", stars) << repeatString("-", lines) << std::endl;
-            }
+            int stars = isEven ? 2 : 1;
+            cout << repeatString("-", lines) << stars * '*' << repeatString("-", lines) << endl;
         }
         else
         {
-            if (n % 2 == 0)
+            if (isEven)
             {
                 mid += 2;
             }
+            else if (mid == 0)
+            {
+                mid++;
+            }
             else
             {
-                if (mid == 0)
-                {
-                    mid += 1;
-                }
-                else
-                {
-                    mid += 2;
-                }
+                mid += 2;
             }
-            lines = lines - 1;
-            std::cout << repeatString("-", lines) << "*" << repeatString("-", mid) << "*" << repeatString("-", lines) << std::endl;
+            lines--;
+
+            cout << repeatString("-", lines) << "*" << repeatString("-", mid) << "*" << repeatString("-", lines) << endl;
         }
     }
 
-    int end = (n / 2) - z;
-    for (int b = 0; b < end; ++b)
+    for (int b = 0; b < (n / 2) - (isEven ? 1 : 0); ++b)
     {
-        // std::cout << mid << std::endl;
-        if (n % 2 != 0)
+        if (!isEven)
         {
-            if (b == static_cast<int>(n / 2) - 1)
+            if (b == (n / 2) - (isEven ? 1 : 0) - 1)
             {
                 lines = b + 1;
-                std::cout << repeatString("-", lines) << "*" << repeatString("-", lines) << std::endl;
+                mid = 0;
+                cout << repeatString("-", lines) << '*' << repeatString("-", lines) << endl;
             }
             else
             {
                 lines = b + 1;
-                mid = mid - 2;
-                std::cout << repeatString("-", lines) << "*" << repeatString("-", mid) << "*" << repeatString("-", lines) << std::endl;
+                mid -= 2;
+                cout << repeatString("-", lines) << "*" << repeatString("-", mid) << "*" << repeatString("-", lines) << endl;
             }
         }
         else
         {
-            if (b == static_cast<int>(n / 2) - 1)
+            if (b == (n / 2) - 1)
             {
                 lines = b + 1;
-                std::cout << repeatString("-", lines) << "**" << repeatString("-", lines) << std::endl;
+                mid = 0;
+                cout << repeatString("-", lines) << "**" << repeatString("-", lines) << endl;
             }
             else
             {
                 lines = b + 1;
-                mid = mid - 2;
-                std::cout << repeatString("-", lines) << "*" << repeatString("-", mid) << "*" << repeatString("-", lines) << std::endl;
+                mid -= 2;
+                cout << repeatString("-", lines) << "*" << repeatString("-", mid) << "*" << repeatString("-", lines) << endl;
             }
         }
     }
